@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+
+<script>
+getLocation();
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;	
+    
+    var URLvar = "https://dweet.io/dweet/for/harrypotter?lat=";
+    URLvar = URLvar.concat(position.coords.latitude);
+    URLvar = URLvar.concat("&long=");
+    URLvar = URLvar.concat(position.coords.longitude);
+    
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", URLvar, false );
+    xmlHttp.send( null );
+   
+}
+
+</script>
+
+</body>
+</html>
